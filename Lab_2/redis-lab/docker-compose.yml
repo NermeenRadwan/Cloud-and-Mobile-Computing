@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  redis-primary:
+    image: redis
+    container_name: redis-primary
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+
+  redis-replica:
+    image: redis
+    container_name: redis-replica
+    command: redis-server --replicaof redis-primary 6379
+    depends_on:
+      - redis-primary
